@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BC - IP Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Dark background color */
+            color: #fff; /* Text color */
+        }
+
+        /* Header styles */
+        header {
+            text-align: center;
+            background-color: #f05a22; /* Orange header background color */
+            color: #fff;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Logo styles */
+        .logo {
+            display: block;
+            margin: 20px auto;
+            max-width: 200px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 30px;
+            background-color: #333; /* Darker background color for the form */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            margin: 30px auto;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #555; /* Darker border color for the input */
+            border-radius: 5px;
+            font-size: 16px;
+            color: #fff; /* Text color for the input */
+            background-color: #444; /* Darker background color for the input */
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #f05a22; /* Orange button background color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #cc4b1c; /* Darker orange on hover */
+        }
+
+        pre {
+            border: 1px solid #555; /* Darker border color for the pre element */
+            background-color: #333; /* Darker background color for the pre element */
+            padding: 10px;
+            max-width: 600px;
+            overflow-x: auto;
+            margin: 20px auto;
+        }
+
+        /* Styles for the result container (unchanged) ... */
+
+        /* Table styles (unchanged) ... */
+
+        /* Kleurcodering voor abuseConfidenceScore (unchanged) ... */
+
+        /* Terugknop stijlen (unchanged) ... */
+    </style>
+</head>
+<body>
+	<header>
+        <img class="logo" src="https://static.wixstatic.com/media/929689_e3287d7ca7294a17b40de353f74416d0~mv2.png/v1/fill/w_420,h_107,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/BC_LOGO-REVISED_18%2C08%2C21-01.png" alt="Brightcare Logo"> <!-- Replace with the URL of your logo -->
+	</header>
+    
+    <form id="ipForm">
+        <label for="ip_address">Enter IP Address:</label>
+        <input type="text" name="ip_address" id="ip_address" required>
+        <button type="button" onclick="checkIP()">Check</button>
+    </form>
+
+    <div id="result-container">
+        <!-- Result section will be updated dynamically using AJAX -->
+    </div>
+
+    <script>
+        function checkIP() {
+            var ipAddress = document.getElementById("ip_address").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var resultContainer = document.getElementById("result-container");
+                    resultContainer.innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send("ip_address=" + encodeURIComponent(ipAddress));
+        }
+
+        // Event listener for Enter key press
+        document.getElementById("ip_address").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission on Enter key press
+                checkIP();
+            }
+        });
+    </script>
+</body>
+</html>

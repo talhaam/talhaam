@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BC - IP Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Dark background color */
+            color: #fff; /* Text color */
+        }
+
+        /* Header styles */
+        header {
+            text-align: center;
+            background-color: #f05a22; /* Orange header background color */
+            color: #fff;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Logo styles */
+        .logo {
+            display: block;
+            margin: 20px auto;
+            max-width: 200px;
+        }
+
+        /* Result container styles */
+        .result-container {
+            max-width: 800px;
+            margin: 20px auto;
+            border: 1px solid #555; /* Darker border color */
+            background-color: #333; /* Darker background color */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #555; /* Darker border color */
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #444; /* Darker background color */
+        }
+
+        /* Kleurcodering voor abuseConfidenceScore (unchanged)... */
+
+        /* Terugknop stijlen */
+        .back-button {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button button {
+            padding: 5px 15px;
+            background-color: #f05a22; /* Orange button background color */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button button:hover {
+            background-color: #cc4b1c; /* Darker orange on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h2>Result:</h2>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+            </tr>
+            {% for key, value in result['data'].items() %}
+            {% if value is iterable and not value|string %}
+            <tr>
+                <td>
+                    {% if key == 'ipAddress' %}
+                    IP Address
+                    {% elif key == 'isPublic' %}
+                    Is Public
+                    {% elif key == 'ipVersion' %}
+                    IP Version
+                    {% elif key == 'isWhitelisted' %}
+                    Is Whitelisted
+                    {% elif key == 'abuseConfidenceScore' %}
+                    Abuse Confidence Score
+                    {% elif key == 'countryCode' %}
+                    Country Code
+                    {% elif key == 'usageType' %}
+                    Usage Type
+                    {% elif key == 'isp' %}
+                    ISP
+                    {% elif key == 'domain' %}
+                    Domain
+                    {% elif key == 'hostnames' %}
+                    Hostnames
+                    {% elif key == 'isTor' %}
+                    Is Tor
+                    {% elif key == 'totalReports' %}
+                    Total Reports
+                    {% elif key == 'numDistinctUsers' %}
+                    Number of Distinct Users
+                    {% elif key == 'lastReportedAt' %}
+                    Last Reported At
+                    {% else %}
+                    {{ key }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if key == 'abuseConfidenceScore' %}
+                    <div class="abuse-score-cell" data-score="{{ value }}">{{ value }}</div>
+                    {% else %}
+                    {% if value is iterable %}
+                    <ul>
+                        {% for inner_value in value %}
+                        <li>{{ inner_value }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    {{ value }}
+                    {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td>
+                    {% if key == 'ipAddress' %}
+                    IP Address
+                    {% elif key == 'isPublic' %}
+                    Is Public
+                    {% elif key == 'ipVersion' %}
+                    IP Version
+                    {% elif key == 'isWhitelisted' %}
+                    Is Whitelisted
+                    {% elif key == 'abuseConfidenceScore' %}
+                    Abuse Confidence Score
+                    {% elif key == 'countryCode' %}
+                    Country Code
+                    {% elif key == 'usageType' %}
+                    Usage Type
+                    {% elif key == 'isp' %}
+                    ISP
+                    {% elif key == 'domain' %}
+                    Domain
+                    {% elif key == 'hostnames' %}
+                    Hostnames
+                    {% elif key == 'isTor' %}
+                    Is Tor
+                    {% elif key == 'totalReports' %}
+                    Total Reports
+                    {% elif key == 'numDistinctUsers' %}
+                    Number of Distinct Users
+                    {% elif key == 'lastReportedAt' %}
+                    Last Reported At
+                    {% else %}
+                    {{ key }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if key == 'abuseConfidenceScore' %}
+                    <div class="abuse-score-cell" data-score="{{ value }}">{{ value }}</div>
+                    {% else %}
+                    {{ value }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
